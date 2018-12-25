@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+ 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Liste Congés</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/libs/css/style.css">
+    <link rel="stylesheet" href="../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <link rel="stylesheet" type="text/css" href="../assets/vendor/datatables/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="../assets/vendor/datatables/css/buttons.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="../assets/vendor/datatables/css/select.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="../assets/vendor/datatables/css/fixedHeader.bootstrap4.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+</head>
+
+<body ng-app="app" ng-controller="app_controller">
+    <!-- ============================================================== -->
+    <!-- main wrapper -->
+    <!-- ============================================================== -->
+    <div class="dashboard-main-wrapper">
+         <!-- ============================================================== -->
+        <!-- navbar -->
+        <!-- ============================================================== -->
+ <div class="dashboard-header">
+            <nav class="navbar navbar-expand-lg bg-white fixed-top">
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto navbar-right-top">
+                        <li class="nav-item">
+                            
+                        </li>
+                        
+                        
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        
+        <!-- ============================================================== -->
+        <!-- end navbar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- left sidebar -->
+        <!-- ============================================================== -->
+       <div class="nav-left-sidebar sidebar-dark">
+            <div class="menu-list">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="d-xl-none d-lg-none" href="#">Menu</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav flex-column">
+                            <li class="nav-divider">
+                                Menu
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="ajout_salarie.html">Ajouter salarié</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="liste_conge.html">Liste congés</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="../index.html">Déconnexion</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end left sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- wrapper  -->
+        <!-- ============================================================== -->
+        <div class="dashboard-wrapper">
+            <div class="container-fluid  dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="pageheader-title">Liste des demandes de congés</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <!-- ============================================================== -->
+                    <!-- basic table  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <h5 class="card-header">Liste des demandes de congés</h5>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered first">
+                                        <thead>
+                                            <tr>
+                                                <th>numéro</th>
+                                                <th>Date début</th>
+                                                <th>Date fin</th>
+                                                <th>Etat</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in conges" id='liste_conges'>
+                                                <td>{{ item.id }}</td>
+                                                <td>{{ item.dat_deb }}</td>
+                                                <td>{{ item.dat_fin }}</td>
+                                                <td>{{ item.etat}}</td>
+                                                <td class="text-center">
+          <!--      <button type="button" class="btn btn-success btn-xs" ng-click='accept(item.id,1)'>Accepter</button>
+               <button type="button" class="btn btn-danger btn-xs" ng-click='accept(item.id,0)'>Refuser</button> -->
+                                                    <button type="button" class="btn btn-primary" ng-click="getCongData(item.id)" >Choix</button>
+                                                </td>
+                                            </tr>
+                                            <tr ng-if="isTagOneActive"><td colspan="5">Aucun ligne à afficher</td></tr>
+                                           
+                                        </tbody>
+                                        
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end basic table  -->
+                    <!-- ============================================================== -->
+                </div>
+                
+                <div class="row">
+                    <!-- ============================================================== -->
+                    <!-- data table rowgroup  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Salarié </h5>
+                               
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example2" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Salarié</th>
+                                                <th>Date début</th>
+                                                <th>Date fin</th>
+                                                <th>Action / Etat</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in congesAll">
+                                                <td>{{ item.id }}</td>
+                                                <td>{{ item.dat_deb }}</td>
+                                                <td>{{ item.dat_fin }}</td>
+                                                <td>{{ item.etat}}</td>
+                                            </tr>
+                                            <tr ng-if="isTagTwoActive"><td colspan="5">Aucun ligne à afficher</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end data table rowgroup  -->
+                    <!-- ============================================================== -->
+                </div>
+                
+               
+            </div>
+   
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="conge_mdl">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">&Eacute;tat de demande du congé</h5>
+                </div>
+                <div class="modal-body" >
+                    <ul class="list-group">
+                        <!-- <li class="list-group-item">Identifiant : {{c_detail.id}}</li> -->
+                        <li class="list-group-item"><strong>Nom &amp; Prénom :</strong> <span class="text-capitalize">{{c_detail.prenom}} {{c_detail.nom}}</span></li>
+                        <li class="list-group-item"><strong>Motif :</strong> {{c_detail.motif_abs}}</li>
+                        <li class="list-group-item">
+                            <strong>Date demandé :</strong> 
+                            <span class='text-info'>Du </span><span class="text-danger">{{c_detail.dat_deb}}</span> 
+                            <span class='text-info'>au </span><span class="text-danger">{{c_detail.dat_fin}}</span> 
+                        </li>
+                    </ul>
+
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label"><strong>Motif de refus</strong></label>
+                        <input class="form-control" ng-model="admin_motif" id="message-text"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success btn-xs" ng-click='accept(c_detail.id,1)'>Accepter</button>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click='accept(c_detail.id,0)'>Refuser</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- ============================================================== -->
+    <!-- end main wrapper -->
+    <!-- ============================================================== -->
+    <!-- Optional JavaScript -->
+    <script src="../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+    <script src="../assets/vendor/multi-select/js/jquery.multi-select.js"></script>
+    <script src="../assets/libs/js/main-js.js"></script>
+    <script type="text/javascript">
+        var app = angular.module("app", []);
+        app.controller("app_controller", function($scope,$http) {
+            // var checkElem = element(by.css('.check-element'));
+
+            $scope.isTagOneActive = false;
+            $scope.isTagTwoActive = false;
+            $http.get('/list_conge').then(function(response){
+                liste = response.data;
+                $scope.sld = liste.length;
+                $scope.conges = liste;
+                if(liste.length==0){
+                    $scope.isTagOneActive = true;
+                }
+            });
+            $http.get('/list_all_adm').then(function(response){
+                listeAll = response.data;
+                $scope.congesAll = listeAll;
+                if(listeAll.length==0){
+                    $scope.isTagTwoActive = true;
+                }
+            });
+            
+            $scope.accept = function(id,action){
+                act = (action==1) ? 'accept' : 'deny';
+                motif = $scope.admin_motif;
+
+                if(action!=1 && !motif.trim()){
+                    alert('Veuillez saisir un motif pour continuer.');
+                }else{
+                    $http.post('/edit_conge',{
+                        status : action,
+                        admin_motif : $scope.admin_motif,
+                        t_id : id
+                    }).then(function(response){
+                        liste = response.data;
+                        $scope.conges = response.data;
+                        if(liste.length==0){
+                            $scope.isTagOneActive = true;
+                        }
+                        $("#conge_mdl").modal('hide');
+                    });
+                }
+            }
+
+            $scope.getCongData = function(id){
+
+                $scope.admin_motif = '';
+                $http.post('/cong_infos',{
+                    c_id : id
+                }).then(function(response){
+                    liste = response.data[0];
+                    $scope.c_detail = liste;
+                    console.log(liste);
+                });
+                $("#conge_mdl").modal();
+            }
+            
+        });
+    </script>
+</body>
+ <!--               uid : $scope.item.uid,
+                    dat_deb : $scope.item.dat_deb,
+                    dat_fin : $scope.item.dat_fin,
+                    motif_abs : $scope.item.motif_abs,
+                    admin_motif : $scope.item.admin_motif,-->
+</html>
